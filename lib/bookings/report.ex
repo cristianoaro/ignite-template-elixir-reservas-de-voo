@@ -12,7 +12,6 @@ defmodule Flightex.Bookings.Report do
     BookingAgent.list_all()
     |> Map.values()
     |> Enum.map(fn order -> booking_string(order) end)
-    |> IO.inspect()
   end
 
   defp booking_string(%Booking{
