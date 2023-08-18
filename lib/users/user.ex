@@ -3,19 +3,19 @@ defmodule Flightex.Users.User do
   @enforce_keys @keys
   defstruct @keys
 
-  def build(name, email, cpf) when is_number(cpf) == false do
-    uuid = UUID.uuid4()
+  def build(_name, _email, cpf) when is_number(cpf) do
+    {:error, "Cpf must be a String"}
+  end
+
+  def build(name, email, cpf) do
+    id = UUID.uuid4()
 
     {:ok,
      %__MODULE__{
-       id: uuid,
+       id: id
        name: name,
        email: email,
-       cpf: cpf
+       cpf: cpf,
      }}
-  end
-
-  def build(_name, _email, _cpf) do
-    {:error, "Cpf must be a String"}
   end
 end

@@ -3,7 +3,7 @@ defmodule Flightex.Bookings.Agent do
 
   use Agent
 
-  def start_link(_initial_state) do
+  def start_link(_init) do
     Agent.start_link(fn -> %{} end, name: __MODULE__)
   end
 
@@ -15,18 +15,14 @@ defmodule Flightex.Bookings.Agent do
     {:ok, uuid}
   end
 
-  def get(uuid) do
-    Agent.get(__MODULE__, &get_state(&1, uuid))
-  end
+  def get(id), do: Agent.get(__MODULE__, &get_booking(&1, id))
 
   def list_all, do: Agent.get(__MODULE__, & &1)
 
-  defp update_state(state, %Booking{} = booking, uuid) do
-    Map.put(state, uuid, booking)
-  end
+  defp update_state(state, %Booking{} = booking, uuid), do: Map.put(state, uuid, booking)
 
-  defp get_state(state, uuid) do
-    case Map.get(state, uuid) do
+  defp get_booking(state, id) do
+    case Map.get(state, id) do
       nil -> {:error, "Booking not found"}
       booking -> {:ok, booking}
     end

@@ -8,7 +8,7 @@ defmodule Flightex.Bookings.Report do
     File.write(filename, booking_list)
   end
 
-  defp build_bookings_list() do
+  defp build_bookings_list do
     BookingAgent.list_all()
     |> Map.values()
     |> Enum.map(fn order -> booking_string(order) end)
@@ -22,7 +22,7 @@ defmodule Flightex.Bookings.Report do
        }) do
     formated_date = format_date(complete_date)
 
-    "#{user_id}, #{local_origin}, #{local_destination},#{formated_date}"
+    "#{user_id}, #{local_origin}, #{local_destination}, #{formated_date}"
   end
 
   defp format_date(date) do
